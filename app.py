@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields
 
@@ -40,10 +40,6 @@ class ModeloSchema(Schema):
     id = fields.Integer()
     nome = fields.String()
     descricao = fields.String()
-
-@app.route('/')
-def index():
-    return "Hello, World!"
 
 @app.route('/modelo', methods = ['GET'])
 def get_all_modelos():
@@ -135,6 +131,11 @@ def delete_modelo(id):
 @app.before_first_request
 def create_table():
     db.create_all()
+
+@app.route('/')
+def index():
+    modelos = Modelo.get_all()
+    return render_template('index.html', modelos=modelos)
 
 if __name__ == '__main__':
     app.run()
