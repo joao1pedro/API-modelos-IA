@@ -1,101 +1,199 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>API - Modelos de IA</title>
-</head>
 
-<body>
-    <i class="bi bi-list menu-mobile"></i>
-    <aside id='header'>
-        <section class="profile">
-            <img src="../static/img/profile-pic.png" alt="Foto João Pedro">
-            <h1>João Pedro</h1>
-            <div class="social-links mt-4 text-center">
-                <a target="_blank" href="https://www.linkedin.com/in/joao-santiago-724076216/">
-                    <i class="bi bi-linkedin"></i>
+{% block body %}
+<i class="bi bi-list menu-mobile"></i>
+<aside id='header'>
+    <section class="profile">
+        <img src="../static/img/profile-pic.png" alt="Foto João Pedro">
+        <h1>João Pedro</h1>
+        <div class="social-links mt-4 text-center">
+            <a target="_blank" href="https://www.linkedin.com/in/joao-santiago-724076216/">
+                <i class="bi bi-linkedin"></i>
+            </a>
+
+            <a target="_blank" href="https://github.com/joao1pedro/">
+                <i class="bi bi-github"></i>
+            </a>
+
+            <a target="_blank" href="https://www.instagram.com/jpedrosantiago/">
+                <i class="bi bi-instagram"></i>
+            </a>
+
+        </div>
+    </section>
+
+    <nav id="navbar" class="nav-menu">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#inicio">
+                    <i class="bi bi-house"></i> Inicio
                 </a>
-
-                <a target="_blank" href="https://github.com/joao1pedro/">
-                    <i class="bi bi-github"></i>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#sobre"><i class="bi bi-info-circle"></i>
+                    Sobre
                 </a>
-
-                <a target="_blank" href="https://www.instagram.com/jpedrosantiago/">
-                    <i class="bi bi-instagram"></i>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#app"><i class="bi bi-app-indicator"></i>
+                    APP
                 </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
 
+<main id="main">
+    <section id="inicio" class="row m-0 p-0">
+        <div class="col-md-5 d-flex justify-content-center align-items-center flex-column">
+            <h2 class="text-dark text-shadow">Modelos IA</h2>
+            <span id="subtitle" class="text-dark text-shadow">Consulte modelos de IA.</span>
+        </div>
+        <div class="col-md-7 d-flex justify-content-center align-items-end">
+            <div id="arraste" class="d-flex align-items-center">
+                <i class="bi bi-arrow-down text-white pe-2 fs-2" aria-hidden="true"></i>
+                <a href="#sobre">Arraste para mais.</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <nav id="navbar" class="nav-menu">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#inicio">
-                        <i class="bi bi-house"></i> Inicio
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#sobre"><i class="bi bi-info-circle"></i>
-                        Sobre
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
-    <main id="main">
-        <section id="inicio" class="row m-0 p-0">
-            <div class="col-md-5 d-flex justify-content-center align-items-center flex-column">
-                <h2 class="text-dark text-shadow">Modelos IA</h2>
-                <span id="subtitle" class="text-dark text-shadow">Consulte modelos de IA.</span>
+    <section id="sobre" class="container mt-5">
+        <div class="row w-100">
+            <div class="col-md-12">
+                <h2 class="pt-3">Sobre</h2>
+                <p>
+                    Esta API REST foi desenvolvida com o objetivo de armazenar modelos de Inteligência Artificial
+                    junto de suas descrições à uma base de dados para consultas futuras.
+                </p>
+                <p>
+                    Foi utilizada a linguagem Python junto do framework Flask para construir a API e uma aplicação
+                    web para apresentar a API.
+                </p>
             </div>
-            <div class="col-md-7 d-flex justify-content-center align-items-end">
-                <div id="arraste" class="d-flex align-items-center">
-                    <i class="bi bi-arrow-down text-white pe-2 fs-2" aria-hidden="true"></i>
-                    <a href="#sobre">Arraste para mais.</a>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <img class="img-fluid shadow" src="../static/img/como-api-funciona.jpg" alt="Como funciona uma API">
+            </div>
+        </div>
+        <div class="row w-100">
+            <div class="col-md-12">
+                <h3 class="pt-3">O quê é um modelo de machine learning?</h3>
+                <p>
+                    Um modelo de machine learning é a expressão de um algoritmo que examina grandes volumes de dados
+                    para identificar padrões ou fazer previsões. Alimentados por dados, os modelos de ML são os
+                    mecanismos matemáticos da AI.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section id="app" class="container mt-5">
+        <div class="row w-100">
+            <div class="col-md-12">
+                <div class="jumbotron pt-3">
+                    <h2>Gerencia <b>Modelos de IA</b> <button type="button" class="btn btn-success float-right"
+                            data-toggle="modal" data-target="#mymodal">Adicionar novo modelo</button> </h2>
+                    <table class="table table-hover table-dark">
+                        <thead>
+                            <tr>
+                                <th>Modelo</th>
+                                <th>Descrição</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for modelo in modelos %}
+                            <tr>
+                                <td>{{ modelo.nome }}</a></td>
+                                <td>{{ modelo.descricao }}</td>
+                                <td>
+                                    <a href="/update/{{modelo.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                                        data-target="#modaledit{{modelo.id}}">Editar </a>
+                                    <a href="/delete/{{modelo.id}}" class="btn btn-danger btn-xs"
+                                        onclick="return confirm('Deseja deletar?')">Deletar</a>
+                                </td>
+                            </tr>
+                            <!-- Modal Editar Modelo-->
+                            <div id="modaledit{{modelo.id}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Editar informações</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{url_for('update')}}" method="POST">
+                                                <div class="form-group">
+                                                    <label>Nome:</label>
+                                                    <input type="hidden" name="id" value="{{modelo.id}}">
+                                                    <input type="text" class="form-control" name="nome"
+                                                        value="{{modelo.nome}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Descrição:</label>
+                                                    <input type="text" class="form-control" name="descricao"
+                                                        value="{{modelo.descricao}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary" type="submit">Editar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Modal Adicionar Modelo-->
+                    <div id="mymodal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Adicionar Modelo</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{url_for('create_modelo')}}" method="POST">
+                                        <div class="form-group">
+                                            <label>Nome:</label>
+                                            <input type="text" class="form-control" name="nome" required="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Descrição:</label>
+                                            <input type="text" class="form-control" name="descricao" required="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">Adicionar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
-        </section>
+        </div>
+        </div>
+    </section>
+</main>
 
-        <section id="sobre" class="container mt-5">
-            <div class="row w-100">
-                <div class="col-md-12">
-                    <h2 class="pt-3">Sobre</h2>
-                    <p>
-                        Esta API REST foi desenvolvida com o objetivo de armazenar modelos de Inteligência Artificial junto de suas descrições à uma base de dados para consultas futuras.
-                    </p>
-                    <p>
-                        Foi utilizada a linguagem Python junto do framework Flask para construir a API e uma aplicação web para apresentar a API.
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 mt-4">
-                    <img class="img-fluid shadow" src="../static/img/como-api-funciona.jpg" alt="Como funciona uma API">
-                </div>
-            </div>
-            <div class="row w-100">
-                <div class="col-md-12">
-                    <h3 class="pt-3">O quê é um modelo de machine learning?</h3>
-                    <p>
-                        Um modelo de machine learning é a expressão de um algoritmo que examina grandes volumes de dados para identificar padrões ou fazer previsões. Alimentados por dados, os modelos de ML são os mecanismos matemáticos da AI.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </main>
+<script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../static/script.js"></script>
+{% endblock %}
 
-    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/script.js"></script>
-</body>
-
-</html>
+<!-- </html> -->
 <!-- <table class="table">
     <thead>
         <tr>
