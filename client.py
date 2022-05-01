@@ -1,6 +1,5 @@
-from flask import Flask, jsonify, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for
 import requests
-import json
 import secrets
 
 app = Flask(__name__)
@@ -36,7 +35,7 @@ def update():
         nome = request.form['nome']
         descricao = request.form['descricao']
 
-        link = 'http://127.0.0.1:5000/modelo/{}'.format(id)
+        link = 'http://127.0.0.1:5000/modelo/{0}'.format(id)
 
         requests.put(link, json={'nome':nome, 'descricao': descricao}, headers=headers)
 
@@ -48,18 +47,16 @@ def update():
 
 
 @app.route('/delete', methods=['GET','POST'])
-def delete():
+def delete(id):
     if request.method == "POST":
-        id = request.form['id']
 
-        link = 'http://127.0.0.1:5000/modelo/{}'.format(id)
+        link = 'http://127.0.0.1:5000/modelo/{0}'.format(id)
 
         requests.delete(link, headers=headers)
 
         flash("Modelo Deletado com Sucesso.")
 
         return redirect(url_for('index'))
-    redirect(url_for('index'))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=3000)
+    app.run(port=3000)

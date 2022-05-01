@@ -110,8 +110,7 @@
                                 <td>
                                     <a href="/update/{{modelo.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
                                         data-target="#modaledit{{modelo.id}}">Editar </a>
-                                    <a href="/delete/{{modelo.id}}" class="btn btn-danger btn-xs"
-                                        onclick="return confirm('Deseja deletar?')">Deletar</a>
+                                    <a href="/delete/{{modelo.id}}" class="btn btn-danger btn-delete btn-xs">Deletar</a>
                                 </td>
                             </tr>
                             <!-- Modal Editar Modelo-->
@@ -178,10 +177,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>
@@ -192,22 +187,3 @@
 <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../static/script.js"></script>
 {% endblock %}
-
-<!-- </html> -->
-<!-- <table class="table">
-    <thead>
-        <tr>
-            <th>Modelo</th>
-            <th>Descrição</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for modelo in modelos %}
-        <tr>
-            <td>{{ modelo.nome }}</a></td>
-            <td>{{ modelo.descricao }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table> -->

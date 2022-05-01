@@ -10,7 +10,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 secret = secrets.token_urlsafe(32)
-
 app.secret_key = secret
 
 
@@ -134,9 +133,9 @@ def update_modelo(id):
 @app.route('/modelo/<int:id>', methods=['DELETE'])
 def delete_modelo(id):
     """Deleta o modelo da base de dados."""
-    modelo = Modelo.get_by_id(id)
-
-    modelo.delete()
+    dados = Modelo.query.get(id)
+    db.session.delete(dados)
+    db.session.commit()
 
     return jsonify(
         {"message": "Deletado"}
@@ -145,38 +144,9 @@ def delete_modelo(id):
 
 @app.before_first_request
 def create_table():
+    """Cria a tabela do banco de dados caso não exista"""
     db.create_all()
 
 
-# @app.route('/')
-# def index():
-#     modelos = Modelo.get_all()
-#     return render_template('index.html', modelos=modelos)
-
-
-# @app.route('/update', methods=['GET', 'POST'])
-# def update():
-#     if (request.method == 'POST'):
-#         dados = Modelo.query.get(request.form.get('id'))
-
-#         dados.nome = request.form['nome']
-#         dados.descricao = request.form['descricao']
-
-#         db.session.commit()
-#         flash("Modelo editado com sucesso!")
-
-#         return redirect(url_for('index'))
-
-
-# @app.route('/delete/<int:id>/', methods=['GET', 'POST'])
-# def delete(id):
-#     dados = Modelo.query.get(id)
-#     db.session.delete(dados)
-#     db.session.commit()
-#     flash("Modelo Deletado com Sucesso.")
-
-#     return redirect(url_for('index'))
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
