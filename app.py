@@ -130,7 +130,7 @@ def update_modelo(id):
     ), 200
 
 
-@app.route('/modelo/<int:id>', methods=['DELETE'])
+@app.route('/delete/<int:id>', methods=['DELETE'])
 def delete_modelo(id):
     """Deleta o modelo da base de dados."""
     dados = Modelo.query.get(id)
@@ -149,4 +149,4 @@ def create_table():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -46,17 +46,15 @@ def update():
         redirect(url_for('delete'))
 
 
-@app.route('/delete', methods=['GET','POST'])
+@app.route('/delete/<int:id>')
 def delete(id):
-    if request.method == "POST":
+    link = 'http://127.0.0.1:5000/delete/{0}'.format(id)
 
-        link = 'http://127.0.0.1:5000/modelo/{0}'.format(id)
+    requests.delete(link, headers=headers)
 
-        requests.delete(link, headers=headers)
+    flash("Modelo Deletado com Sucesso.")
 
-        flash("Modelo Deletado com Sucesso.")
-
-        return redirect(url_for('index'))
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
-    app.run(port=3000)
+    app.run(debug=True,port=3000)
