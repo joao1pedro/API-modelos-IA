@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, redirect, render_template, request, url_for, flash
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields
 import secrets
@@ -60,12 +60,10 @@ def get_all_modelos():
     )
 
 
-@app.route('/modelo', methods=['POST'])
+@app.route('/modelo', methods=['GET','POST'])
 def create_modelo():
     """Cadastra um novo modelo no banco de dados."""
-    content_type = request.headers.get('Content-Type')
-
-    if (content_type == 'application/json'):
+    if request.method == 'POST':
         dados = request.get_json()
 
         novo_modelo = Modelo(
@@ -82,16 +80,6 @@ def create_modelo():
         return jsonify(
             dados
         ), 201
-    elif (content_type == 'application/x-www-form-urlencoded'):
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-
-        novo_modelo = Modelo(nome=nome, descricao=descricao)
-        novo_modelo.save()
-
-        flash("Modelo adicionado com sucesso!")
-
-        return redirect(url_for('index'))
 
 
 @app.route('/modelo/<string:nome>', methods=['GET'])
@@ -160,35 +148,35 @@ def create_table():
     db.create_all()
 
 
-@app.route('/')
-def index():
-    modelos = Modelo.get_all()
-    return render_template('index.html', modelos=modelos)
+# @app.route('/')
+# def index():
+#     modelos = Modelo.get_all()
+#     return render_template('index.html', modelos=modelos)
 
 
-@app.route('/update', methods=['GET', 'POST'])
-def update():
-    if (request.method == 'POST'):
-        dados = Modelo.query.get(request.form.get('id'))
+# @app.route('/update', methods=['GET', 'POST'])
+# def update():
+#     if (request.method == 'POST'):
+#         dados = Modelo.query.get(request.form.get('id'))
 
-        dados.nome = request.form['nome']
-        dados.descricao = request.form['descricao']
+#         dados.nome = request.form['nome']
+#         dados.descricao = request.form['descricao']
 
-        db.session.commit()
-        flash("Modelo editado com sucesso!")
+#         db.session.commit()
+#         flash("Modelo editado com sucesso!")
 
-        return redirect(url_for('index'))
+#         return redirect(url_for('index'))
 
 
-@app.route('/delete/<int:id>/', methods=['GET', 'POST'])
-def delete(id):
-    dados = Modelo.query.get(id)
-    db.session.delete(dados)
-    db.session.commit()
-    flash("Modelo Deletado com Sucesso.")
+# @app.route('/delete/<int:id>/', methods=['GET', 'POST'])
+# def delete(id):
+#     dados = Modelo.query.get(id)
+#     db.session.delete(dados)
+#     db.session.commit()
+#     flash("Modelo Deletado com Sucesso.")
 
-    return redirect(url_for('index'))
+#     return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
