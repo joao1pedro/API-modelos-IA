@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields
 import secrets
@@ -146,6 +146,11 @@ def delete_modelo(id):
 def create_table():
     """Cria a tabela do banco de dados caso não exista"""
     db.create_all()
+
+@app.route('/')
+def index():
+    """Deleta o modelo da base de dados."""
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
