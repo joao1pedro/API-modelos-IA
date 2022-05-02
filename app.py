@@ -1,10 +1,11 @@
+import secrets
+
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields
-import secrets
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///database.sqlite3'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -48,27 +49,22 @@ class ModeloSchema(Schema):
     descricao = fields.String()
 
 
-@app.route('/modelo', methods=['GET'])
+@app.route("/modelo", methods=["GET"])
 def get_all_modelos():
     """Retorna todos os modelos de IA cadastrados na base de dados."""
     modelos = Modelo.get_all()
     serializer = ModeloSchema(many=True)
     dados = serializer.dump(modelos)
-    return jsonify(
-        dados
-    )
+    return jsonify(dados)
 
 
-@app.route('/modelo', methods=['GET','POST'])
+@app.route("/modelo", methods=["GET", "POST"])
 def create_modelo():
     """Cadastra um novo modelo no banco de dados."""
-    if request.method == 'POST':
+    if request.method == "POST":
         dados = request.get_json()
 
-        novo_modelo = Modelo(
-            nome=dados.get('nome'),
-            descricao=dados.get('descricao')
-        )
+        novo_modelo = Modelo(nome=dados.get("nome"), descricao=dados.get("descricao"))
 
         novo_modelo.save()
 
@@ -76,12 +72,10 @@ def create_modelo():
 
         dados = serializer.dump(novo_modelo)
 
-        return jsonify(
-            dados
-        ), 201
+        return jsonify(dados), 201
 
 
-@app.route('/modelo/<string:nome>', methods=['GET'])
+@app.route("/modelo/<string:nome>", methods=["GET"])
 def get_modelo_by_nome(nome):
     """Retorna nome e descrição de um determinado modelo passado seu nome como parâmetro."""
     modelo = Modelo.get_by_nome(nome)
@@ -90,12 +84,10 @@ def get_modelo_by_nome(nome):
 
     dados = serializer.dump(modelo)
 
-    return jsonify(
-        dados
-    ), 200
+    return jsonify(dados), 200
 
 
-@app.route('/modelo/<int:id>', methods=['GET'])
+@app.route("/modelo/<int:id>", methods=["GET"])
 def get_modelo_by_id(id):
     """Retorna nome e descrição de um determinado modelo passado seu id como parâmetro."""
     modelo = Modelo.get_by_id(id)
@@ -104,20 +96,18 @@ def get_modelo_by_id(id):
 
     dados = serializer.dump(modelo)
 
-    return jsonify(
-        dados
-    ), 200
+    return jsonify(dados), 200
 
 
-@app.route('/modelo/<int:id>', methods=['PUT'])
+@app.route("/modelo/<int:id>", methods=["PUT"])
 def update_modelo(id):
     """Edita os campos de um modelo (nome, descrição)."""
     modelo = Modelo.get_by_id(id)
 
     dados = request.get_json()
 
-    modelo.nome = dados.get('nome')
-    modelo.descricao = dados.get('descricao')
+    modelo.nome = dados.get("nome")
+    modelo.descricao = dados.get("descricao")
 
     db.session.commit()
 
@@ -125,21 +115,17 @@ def update_modelo(id):
 
     dados = serializer.dump(modelo)
 
-    return jsonify(
-        dados
-    ), 200
+    return jsonify(dados), 200
 
 
-@app.route('/delete/<int:id>', methods=['DELETE'])
+@app.route("/delete/<int:id>", methods=["DELETE"])
 def delete_modelo(id):
     """Deleta o modelo da base de dados."""
     dados = Modelo.query.get(id)
     db.session.delete(dados)
     db.session.commit()
 
-    return jsonify(
-        {"message": "Deletado"}
-    ), 204
+    return jsonify({"message": "Deletado"}), 204
 
 
 @app.before_first_request
@@ -147,11 +133,12 @@ def create_table():
     """Cria a tabela do banco de dados caso não exista"""
     db.create_all()
 
-@app.route('/')
+
+@app.route("/")
 def index():
     """Deleta o modelo da base de dados."""
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
