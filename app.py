@@ -1,14 +1,19 @@
 import os
 import secrets
 
+import click
 from flask import Flask, jsonify, render_template, request
+from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields
 
-SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+uri = os.environ.get("DATABASE_URL")
+
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -131,7 +136,9 @@ def delete_modelo(id):
     return jsonify({"message": "Deletado"}), 204
 
 
-@app.before_first_request
+# @app.before_first_request
+@click.command(name="create_tables")
+@with_appcontext
 def create_table():
     """Cria a tabela do banco de dados caso não exista"""
     db.create_all()
